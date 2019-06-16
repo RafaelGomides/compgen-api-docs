@@ -590,18 +590,78 @@ definitions:
   models.Document:
     title: Document
     type: object
+    properties:
+      ID:
+        type: integer
+        format: int64
+      Name:
+        type: string
+      PrivateCopy:
+        type: string
+      PublicCopy:
+        type: string
+      ServiceOrder:
+        $ref: '#/definitions/models.ServiceOrder'
+      Status:
+        type: string
+      Type:
+        type: string
+      User:
+        $ref: '#/definitions/models.User'
   models.Permissions:
     title: Permissions
     type: object
+    properties:
+      ID:
+        type: integer
+        format: int64
+      Type:
+        type: string
   models.ServiceOrder:
     title: ServiceOrder
     type: object
+    properties:
+      Documents:
+        type: array
+        items:
+          $ref: '#/definitions/models.Document'
+      ID:
+        type: integer
+        format: int64
+      Service:
+        $ref: '#/definitions/models.Services'
+      Status:
+        type: string
   models.Services:
     title: Services
     type: object
+    properties:
+      ID:
+        type: integer
+        format: int64
+      Name:
+        type: string
   models.User:
     title: User
     type: object
+    properties:
+      Cpf:
+        type: string
+      Documents:
+        type: array
+        items:
+          $ref: '#/definitions/models.Document'
+      Email:
+        type: string
+      ID:
+        type: integer
+        format: int64
+      Name:
+        type: string
+      Password:
+        type: string
+      Permission:
+        $ref: '#/definitions/models.Permissions'
 tags:
 - name: document
   description: |2

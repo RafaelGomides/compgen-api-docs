@@ -20,6 +20,10 @@ func init() {
 	orm.RegisterModel(new(ServiceOrder))
 }
 
+func (a *ServiceOrder) TableName() string {
+	return "ServiceOrder"
+}
+
 // AddServiceOrder insert a new ServiceOrder into database and returns
 // last inserted ID on success.
 func AddServiceOrder(m *ServiceOrder) (id int64, err error) {

@@ -18,6 +18,10 @@ func init() {
 	orm.RegisterModel(new(Permissions))
 }
 
+func (a *Permissions) TableName() string {
+	return "Permissions"
+}
+
 // AddPermissions insert a new Permissions into database and returns
 // last inserted ID on success.
 func AddPermissions(m *Permissions) (id int64, err error) {

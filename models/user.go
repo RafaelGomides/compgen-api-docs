@@ -23,6 +23,10 @@ func init() {
 	orm.RegisterModel(new(User))
 }
 
+func (a *User) TableName() string {
+	return "User"
+}
+
 // AddUser insert a new User into database and returns
 // last inserted ID on success.
 func AddUser(m *User) (id int64, err error) {

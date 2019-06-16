@@ -24,6 +24,10 @@ func init() {
 	orm.RegisterModel(new(Document))
 }
 
+func (a *Document) TableName() string {
+	return "Document"
+}
+
 // AddDocument insert a new Document into database and returns
 // last inserted ID on success.
 func AddDocument(m *Document) (id int64, err error) {

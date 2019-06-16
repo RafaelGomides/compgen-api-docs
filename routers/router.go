@@ -8,7 +8,7 @@
 package routers
 
 import (
-	"github.com/compgenbr/compgen-api-docs/controllers"
+	"compgen-api-docs/controllers"
 
 	"github.com/astaxie/beego"
 )

@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	models "github.com/compgenbr/compgen-api-docs/models"
+	models "compgen-api-docs/models"
 
 	"github.com/astaxie/beego"
 )

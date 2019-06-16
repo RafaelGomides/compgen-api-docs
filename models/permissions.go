@@ -10,8 +10,8 @@ import (
 )
 
 type Permissions struct {
-	ID   int64  `orm:"auto;column(id)"`
-	Type string `orm:"size(128)"`
+	ID   int64  `orm:"auto;column(id)" json:"ID"`
+	Type string `orm:"size(128)" json:"Type"`
 }
 
 func init() {

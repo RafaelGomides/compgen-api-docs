@@ -10,8 +10,10 @@ import (
 )
 
 type ServiceOrder struct {
-	ID     int64  `orm:"auto;column(id)"`
-	Status string `orm:"size(128)"`
+	ID        int64       `orm:"auto;column(id)" json:"ID"`
+	Status    string      `orm:"size(128)" json:"Status"`
+	Service   *Services   `orm:"column(service);rel(one)" json:"Service"`
+	Documents []*Document `orm:"reverse(many)" json:"Documents"`
 }
 
 func init() {

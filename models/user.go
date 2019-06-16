@@ -10,11 +10,13 @@ import (
 )
 
 type User struct {
-	ID       int64  `orm:"auto;column(id)"`
-	Name     string `orm:"size(128)"`
-	Cpf      string `orm:"size(128)"`
-	Email    string `orm:"size(128)"`
-	Password string `orm:"size(128)"`
+	ID         int64        `orm:"auto;column(id)" json:"ID"`
+	Name       string       `orm:"size(128)" json:"Name"`
+	Cpf        string       `orm:"size(128)" json:"Cpf"`
+	Email      string       `orm:"size(128)" json:"Email"`
+	Password   string       `orm:"size(128)" json:"Password"`
+	Permission *Permissions `orm:"column(permission);rel(one)" json:"Permission"`
+	Documents  []*Document  `orm:"reverse(many)" json:"Documents"`
 }
 
 func init() {

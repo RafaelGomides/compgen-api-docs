@@ -10,8 +10,8 @@ import (
 )
 
 type Services struct {
-	ID   int64  `orm:"auto;column(id)"`
-	Name string `orm:"size(128)"`
+	ID   int64  `orm:"auto;column(id)" json:"ID`
+	Name string `orm:"size(128)" json:"Name`
 }
 
 func init() {

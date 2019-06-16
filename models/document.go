@@ -10,12 +10,14 @@ import (
 )
 
 type Document struct {
-	ID          int64  `orm:"auto;column(id)"`
-	Name        string `orm:"size(128)"`
-	Status      string `orm:"size(128)"`
-	PublicCopy  string `orm:"size(128)"`
-	PrivateCopy string `orm:"size(128)"`
-	Type        string `orm:"size(128)"`
+	ID           int64         `orm:"auto;column(id)" json:"ID"`
+	Name         string        `orm:"size(128)" json:"Name"`
+	Status       string        `orm:"size(128)" json:"Status"`
+	PublicCopy   string        `orm:"size(128)" json:"PublicCopy"`
+	PrivateCopy  string        `orm:"size(128)" json:"PrivateCopy"`
+	Type         string        `orm:"size(128)" json:"Type"`
+	User         *User         `orm:"column(user);rel(fk)" json:"User"`
+	ServiceOrder *ServiceOrder `orm:"column(service_order);rel(fk)" json:"ServiceOrder"`
 }
 
 func init() {

@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"github.com/compgenbr/compgen-api-docs/models"
 	"encoding/json"
 	"errors"
 	"strconv"
 	"strings"
+
+	models "github.com/compgenbr/compgen-api-docs/models"
 
 	"github.com/astaxie/beego"
 )
@@ -53,7 +54,7 @@ func (c *ServiceOrderController) Post() {
 func (c *ServiceOrderController) GetOne() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.ParseInt(idStr, 0, 64)
-	v, err := models.GetServiceOrderById(id)
+	v, err := models.GetServiceOrderByID(id)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {
@@ -136,9 +137,9 @@ func (c *ServiceOrderController) GetAll() {
 func (c *ServiceOrderController) Put() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.ParseInt(idStr, 0, 64)
-	v := models.ServiceOrder{Id: id}
+	v := models.ServiceOrder{ID: id}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
-	if err := models.UpdateServiceOrderById(&v); err == nil {
+	if err := models.UpdateServiceOrderByID(&v); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()

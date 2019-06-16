@@ -10,7 +10,7 @@ import (
 )
 
 type Document struct {
-	Id          int64  `orm:"auto"`
+	ID          int64  `orm:"auto;column(id)"`
 	Name        string `orm:"size(128)"`
 	Status      string `orm:"size(128)"`
 	PublicCopy  string `orm:"size(128)"`
@@ -23,19 +23,19 @@ func init() {
 }
 
 // AddDocument insert a new Document into database and returns
-// last inserted Id on success.
+// last inserted ID on success.
 func AddDocument(m *Document) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetDocumentById retrieves Document by Id. Returns error if
-// Id doesn't exist
-func GetDocumentById(id int64) (v *Document, err error) {
+// GetDocumentByID retrieves Document by ID. Returns error if
+// ID doesn't exist
+func GetDocumentByID(id int64) (v *Document, err error) {
 	o := orm.NewOrm()
-	v = &Document{Id: id}
-	if err = o.QueryTable(new(Document)).Filter("Id", id).RelatedSel().One(v); err == nil {
+	v = &Document{ID: id}
+	if err = o.QueryTable(new(Document)).Filter("ID", id).RelatedSel().One(v); err == nil {
 		return v, nil
 	}
 	return nil, err
@@ -115,11 +115,11 @@ func GetAllDocument(query map[string]string, fields []string, sortby []string, o
 	return nil, err
 }
 
-// UpdateDocument updates Document by Id and returns error if
+// UpdateDocument updates Document by ID and returns error if
 // the record to be updated doesn't exist
-func UpdateDocumentById(m *Document) (err error) {
+func UpdateDocumentByID(m *Document) (err error) {
 	o := orm.NewOrm()
-	v := Document{Id: m.Id}
+	v := Document{ID: m.ID}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -130,15 +130,15 @@ func UpdateDocumentById(m *Document) (err error) {
 	return
 }
 
-// DeleteDocument deletes Document by Id and returns error if
+// DeleteDocument deletes Document by ID and returns error if
 // the record to be deleted doesn't exist
 func DeleteDocument(id int64) (err error) {
 	o := orm.NewOrm()
-	v := Document{Id: id}
+	v := Document{ID: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&Document{Id: id}); err == nil {
+		if num, err = o.Delete(&Document{ID: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

@@ -10,7 +10,7 @@ import (
 )
 
 type Permissions struct {
-	Id   int64  `orm:"auto"`
+	ID   int64  `orm:"auto;column(id)"`
 	Type string `orm:"size(128)"`
 }
 
@@ -19,19 +19,19 @@ func init() {
 }
 
 // AddPermissions insert a new Permissions into database and returns
-// last inserted Id on success.
+// last inserted ID on success.
 func AddPermissions(m *Permissions) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetPermissionsById retrieves Permissions by Id. Returns error if
-// Id doesn't exist
-func GetPermissionsById(id int64) (v *Permissions, err error) {
+// GetPermissionsByID retrieves Permissions by ID. Returns error if
+// ID doesn't exist
+func GetPermissionsByID(id int64) (v *Permissions, err error) {
 	o := orm.NewOrm()
-	v = &Permissions{Id: id}
-	if err = o.QueryTable(new(Permissions)).Filter("Id", id).RelatedSel().One(v); err == nil {
+	v = &Permissions{ID: id}
+	if err = o.QueryTable(new(Permissions)).Filter("ID", id).RelatedSel().One(v); err == nil {
 		return v, nil
 	}
 	return nil, err
@@ -111,11 +111,11 @@ func GetAllPermissions(query map[string]string, fields []string, sortby []string
 	return nil, err
 }
 
-// UpdatePermissions updates Permissions by Id and returns error if
+// UpdatePermissions updates Permissions by ID and returns error if
 // the record to be updated doesn't exist
-func UpdatePermissionsById(m *Permissions) (err error) {
+func UpdatePermissionsByID(m *Permissions) (err error) {
 	o := orm.NewOrm()
-	v := Permissions{Id: m.Id}
+	v := Permissions{ID: m.ID}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -126,15 +126,15 @@ func UpdatePermissionsById(m *Permissions) (err error) {
 	return
 }
 
-// DeletePermissions deletes Permissions by Id and returns error if
+// DeletePermissions deletes Permissions by ID and returns error if
 // the record to be deleted doesn't exist
 func DeletePermissions(id int64) (err error) {
 	o := orm.NewOrm()
-	v := Permissions{Id: id}
+	v := Permissions{ID: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&Permissions{Id: id}); err == nil {
+		if num, err = o.Delete(&Permissions{ID: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

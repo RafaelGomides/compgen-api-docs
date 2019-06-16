@@ -10,7 +10,7 @@ import (
 )
 
 type Services struct {
-	Id   int64  `orm:"auto"`
+	ID   int64  `orm:"auto;column(id)"`
 	Name string `orm:"size(128)"`
 }
 
@@ -19,19 +19,19 @@ func init() {
 }
 
 // AddServices insert a new Services into database and returns
-// last inserted Id on success.
+// last inserted ID on success.
 func AddServices(m *Services) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetServicesById retrieves Services by Id. Returns error if
-// Id doesn't exist
-func GetServicesById(id int64) (v *Services, err error) {
+// GetServicesByID retrieves Services by ID. Returns error if
+// ID doesn't exist
+func GetServicesByID(id int64) (v *Services, err error) {
 	o := orm.NewOrm()
-	v = &Services{Id: id}
-	if err = o.QueryTable(new(Services)).Filter("Id", id).RelatedSel().One(v); err == nil {
+	v = &Services{ID: id}
+	if err = o.QueryTable(new(Services)).Filter("ID", id).RelatedSel().One(v); err == nil {
 		return v, nil
 	}
 	return nil, err
@@ -111,11 +111,11 @@ func GetAllServices(query map[string]string, fields []string, sortby []string, o
 	return nil, err
 }
 
-// UpdateServices updates Services by Id and returns error if
+// UpdateServices updates Services by ID and returns error if
 // the record to be updated doesn't exist
-func UpdateServicesById(m *Services) (err error) {
+func UpdateServicesByID(m *Services) (err error) {
 	o := orm.NewOrm()
-	v := Services{Id: m.Id}
+	v := Services{ID: m.ID}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -126,15 +126,15 @@ func UpdateServicesById(m *Services) (err error) {
 	return
 }
 
-// DeleteServices deletes Services by Id and returns error if
+// DeleteServices deletes Services by ID and returns error if
 // the record to be deleted doesn't exist
 func DeleteServices(id int64) (err error) {
 	o := orm.NewOrm()
-	v := Services{Id: id}
+	v := Services{ID: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&Services{Id: id}); err == nil {
+		if num, err = o.Delete(&Services{ID: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

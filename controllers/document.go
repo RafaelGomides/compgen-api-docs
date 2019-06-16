@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"github.com/compgenbr/compgen-api-docs/models"
 	"encoding/json"
 	"errors"
 	"strconv"
 	"strings"
+
+	models "github.com/compgenbr/compgen-api-docs/models"
 
 	"github.com/astaxie/beego"
 )
@@ -53,7 +54,7 @@ func (c *DocumentController) Post() {
 func (c *DocumentController) GetOne() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.ParseInt(idStr, 0, 64)
-	v, err := models.GetDocumentById(id)
+	v, err := models.GetDocumentByID(id)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {
@@ -136,9 +137,9 @@ func (c *DocumentController) GetAll() {
 func (c *DocumentController) Put() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.ParseInt(idStr, 0, 64)
-	v := models.Document{Id: id}
+	v := models.Document{ID: id}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
-	if err := models.UpdateDocumentById(&v); err == nil {
+	if err := models.UpdateDocumentByID(&v); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()

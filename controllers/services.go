@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"github.com/compgenbr/compgen-api-docs/models"
 	"encoding/json"
 	"errors"
 	"strconv"
 	"strings"
+
+	models "github.com/compgenbr/compgen-api-docs/models"
 
 	"github.com/astaxie/beego"
 )
@@ -53,7 +54,7 @@ func (c *ServicesController) Post() {
 func (c *ServicesController) GetOne() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.ParseInt(idStr, 0, 64)
-	v, err := models.GetServicesById(id)
+	v, err := models.GetServicesByID(id)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {
@@ -136,9 +137,9 @@ func (c *ServicesController) GetAll() {
 func (c *ServicesController) Put() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.ParseInt(idStr, 0, 64)
-	v := models.Services{Id: id}
+	v := models.Services{ID: id}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
-	if err := models.UpdateServicesById(&v); err == nil {
+	if err := models.UpdateServicesByID(&v); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()

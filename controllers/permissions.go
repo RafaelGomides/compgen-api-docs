@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"github.com/compgenbr/compgen-api-docs/models"
 	"encoding/json"
 	"errors"
 	"strconv"
 	"strings"
+
+	models "github.com/compgenbr/compgen-api-docs/models"
 
 	"github.com/astaxie/beego"
 )
@@ -53,7 +54,7 @@ func (c *PermissionsController) Post() {
 func (c *PermissionsController) GetOne() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.ParseInt(idStr, 0, 64)
-	v, err := models.GetPermissionsById(id)
+	v, err := models.GetPermissionsByID(id)
 	if err != nil {
 		c.Data["json"] = err.Error()
 	} else {
@@ -136,9 +137,9 @@ func (c *PermissionsController) GetAll() {
 func (c *PermissionsController) Put() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.ParseInt(idStr, 0, 64)
-	v := models.Permissions{Id: id}
+	v := models.Permissions{ID: id}
 	json.Unmarshal(c.Ctx.Input.RequestBody, &v)
-	if err := models.UpdatePermissionsById(&v); err == nil {
+	if err := models.UpdatePermissionsByID(&v); err == nil {
 		c.Data["json"] = "OK"
 	} else {
 		c.Data["json"] = err.Error()

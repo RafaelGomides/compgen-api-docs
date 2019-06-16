@@ -10,7 +10,7 @@ import (
 )
 
 type ServiceOrder struct {
-	Id     int64  `orm:"auto"`
+	ID     int64  `orm:"auto;column(id)"`
 	Status string `orm:"size(128)"`
 }
 
@@ -19,19 +19,19 @@ func init() {
 }
 
 // AddServiceOrder insert a new ServiceOrder into database and returns
-// last inserted Id on success.
+// last inserted ID on success.
 func AddServiceOrder(m *ServiceOrder) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetServiceOrderById retrieves ServiceOrder by Id. Returns error if
-// Id doesn't exist
-func GetServiceOrderById(id int64) (v *ServiceOrder, err error) {
+// GetServiceOrderByID retrieves ServiceOrder by ID. Returns error if
+// ID doesn't exist
+func GetServiceOrderByID(id int64) (v *ServiceOrder, err error) {
 	o := orm.NewOrm()
-	v = &ServiceOrder{Id: id}
-	if err = o.QueryTable(new(ServiceOrder)).Filter("Id", id).RelatedSel().One(v); err == nil {
+	v = &ServiceOrder{ID: id}
+	if err = o.QueryTable(new(ServiceOrder)).Filter("ID", id).RelatedSel().One(v); err == nil {
 		return v, nil
 	}
 	return nil, err
@@ -111,11 +111,11 @@ func GetAllServiceOrder(query map[string]string, fields []string, sortby []strin
 	return nil, err
 }
 
-// UpdateServiceOrder updates ServiceOrder by Id and returns error if
+// UpdateServiceOrder updates ServiceOrder by ID and returns error if
 // the record to be updated doesn't exist
-func UpdateServiceOrderById(m *ServiceOrder) (err error) {
+func UpdateServiceOrderByID(m *ServiceOrder) (err error) {
 	o := orm.NewOrm()
-	v := ServiceOrder{Id: m.Id}
+	v := ServiceOrder{ID: m.ID}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -126,15 +126,15 @@ func UpdateServiceOrderById(m *ServiceOrder) (err error) {
 	return
 }
 
-// DeleteServiceOrder deletes ServiceOrder by Id and returns error if
+// DeleteServiceOrder deletes ServiceOrder by ID and returns error if
 // the record to be deleted doesn't exist
 func DeleteServiceOrder(id int64) (err error) {
 	o := orm.NewOrm()
-	v := ServiceOrder{Id: id}
+	v := ServiceOrder{ID: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&ServiceOrder{Id: id}); err == nil {
+		if num, err = o.Delete(&ServiceOrder{ID: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}
